@@ -5,8 +5,19 @@ import json
 def calculate_panels(panel_width: int, panel_height: int, 
                     roof_width: int, roof_height: int) -> int:
     
-    # Implementa acá tu solución
-    
+    wp=panel_width
+    hp=panel_height
+    wr=roof_width
+    hr=roof_height
+    #CASO 1: Paneles en vertical, de "pie"
+    #a)cuantas paneles caben en el ancho del techo
+    p_in_r_w=wr//wp
+    #b)cuantas paneles caben en el alto del techo
+    p_in_r_h=hr//hp
+    #c)cuantos paneles caben en el techo
+    p_in_r=p_in_r_w*p_in_r_h
+
+    p_in_r_w=wr//wp
     return 0
 
 
