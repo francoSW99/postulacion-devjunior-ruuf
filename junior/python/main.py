@@ -9,26 +9,28 @@ def calculate_panels(panel_width: int, panel_height: int,
     hp=panel_height
     wr=roof_width
     hr=roof_height
+    #CASO CRITICO: Paneles mas grandes que el techo 
+    if (wp>wr or hp>hr) and (wp>hr or hp>wr):
+        final=0
+    else:
+        #CASO 1: Paneles en vertical, de "pie"
+        #a)cuantas paneles caben en el ancho del techo
+        pv_in_r_w=wr//wp
+        #b)cuantas paneles caben en el alto del techo
+        pv_in_r_h=hr//hp
+        #c)cuantos paneles caben en el techo
+        pv_in_r=pv_in_r_w*pv_in_r_h
 
-    #CASO 1: Paneles en vertical, de "pie"
-    #a)cuantas paneles caben en el ancho del techo
-    pv_in_r_w=wr//wp
-    #b)cuantas paneles caben en el alto del techo
-    pv_in_r_h=hr//hp
-    #c)cuantos paneles caben en el techo
-    pv_in_r=pv_in_r_w*pv_in_r_h
 
+        #CASO 2: Paneles en horizontal, "acostados"
+        #a)cuantas paneles caben en el ancho del techo
+        ph_in_r_w=wr//hp
+        #b)cuantas paneles caben en el alto del techo
+        ph_in_r_h=hr//wp
+        #c)cuantos paneles caben en el techo
+        ph_in_r=ph_in_r_w*ph_in_r_h
 
-
-    #CASO 2: Paneles en horizontal, "acostados"
-    #a)cuantas paneles caben en el ancho del techo
-    ph_in_r_w=wr//hp
-    #b)cuantas paneles caben en el alto del techo
-    ph_in_r_h=hr//wp
-    #c)cuantos paneles caben en el techo
-    ph_in_r=ph_in_r_w*ph_in_r_h
-
-    final=max(pv_in_r,ph_in_r)
+        final=max(pv_in_r,ph_in_r)
 
     return final
 
