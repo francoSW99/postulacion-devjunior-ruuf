@@ -9,16 +9,28 @@ def calculate_panels(panel_width: int, panel_height: int,
     hp=panel_height
     wr=roof_width
     hr=roof_height
+
     #CASO 1: Paneles en vertical, de "pie"
     #a)cuantas paneles caben en el ancho del techo
-    p_in_r_w=wr//wp
+    pv_in_r_w=wr//wp
     #b)cuantas paneles caben en el alto del techo
-    p_in_r_h=hr//hp
+    pv_in_r_h=hr//hp
     #c)cuantos paneles caben en el techo
-    p_in_r=p_in_r_w*p_in_r_h
+    pv_in_r=pv_in_r_w*pv_in_r_h
 
-    p_in_r_w=wr//wp
-    return 0
+
+
+    #CASO 2: Paneles en horizontal, "acostados"
+    #a)cuantas paneles caben en el ancho del techo
+    ph_in_r_w=wr//hp
+    #b)cuantas paneles caben en el alto del techo
+    ph_in_r_h=hr//wp
+    #c)cuantos paneles caben en el techo
+    ph_in_r=ph_in_r_w*ph_in_r_h
+
+    final=max(pv_in_r,ph_in_r)
+
+    return final
 
 
 def run_tests() -> None:
