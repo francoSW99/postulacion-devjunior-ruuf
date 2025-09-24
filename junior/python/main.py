@@ -11,26 +11,46 @@ def calculate_panels(panel_width: int, panel_height: int,
     hr=roof_height
     #CASO CRITICO: Paneles mas grandes que el techo 
     if (wp>wr or hp>hr) and (wp>hr or hp>wr):
-        final=0
-    else:
-        #CASO 1: Paneles en vertical, de "pie"
-        #a)cuantas paneles caben en el ancho del techo
-        pv_in_r_w=wr//wp
-        #b)cuantas paneles caben en el alto del techo
-        pv_in_r_h=hr//hp
-        #c)cuantos paneles caben en el techo
-        pv_in_r=pv_in_r_w*pv_in_r_h
+        return 0
+   
+    #CASO 1: Paneles en vertical, de "pie"
+    #a)cuantas paneles caben en el ancho del techo
+    pv_in_r_w=wr//wp
+    #b)cuantas paneles caben en el alto del techo
+    pv_in_r_h=hr//hp
+    #c)cuantos paneles caben en el techo
+    pv_in_r=pv_in_r_w*pv_in_r_h
 
 
-        #CASO 2: Paneles en horizontal, "acostados"
-        #a)cuantas paneles caben en el ancho del techo
-        ph_in_r_w=wr//hp
-        #b)cuantas paneles caben en el alto del techo
-        ph_in_r_h=hr//wp
-        #c)cuantos paneles caben en el techo
-        ph_in_r=ph_in_r_w*ph_in_r_h
+    #CASO 2: Paneles en horizontal, "acostados"
+    #a)cuantas paneles caben en el ancho del techo
+    ph_in_r_w=wr//hp
+    #b)cuantas paneles caben en el alto del techo
+    ph_in_r_h=hr//wp
+    #c)cuantos paneles caben en el techo
+    ph_in_r=ph_in_r_w*ph_in_r_h
 
-        final=max(pv_in_r,ph_in_r)
+    final=max(pv_in_r,ph_in_r)
+
+    # CASO 3: COMBINACIÓN POR CORTE VERTICAL (COMBINACION DE ORIENTACION)
+    # ¿Qué pasa si cortamos el techo verticalmente y se llenan los espacios con paneles?
+    if wp>0 and wr > wp: #para envitar recursividad infinita
+        # Rectángulo 1 (normal, con un corte vertical del mismo ancho del panel): wp x hr
+        rect1 = calculate_panels(wp, hp, wp, hr)
+        # Rectángulo 2 (el resto del techo con el corte ya hecho): (wr - wp) x hr
+        rect2 = calculate_panels(wp, hp, wr - wp, hr)
+
+        #combinacion de los 2 rectangulos
+        combi_v = rect1 +  rect2
+        final = max(final, combi_v)
+
+    #CASO 4: COMBINACIÓN POR CORTE HORIZONTAL (COMBINACION DE ORIENTACION).
+    #MISMO CASO PERO EN FORMA DE CORTE HORIZONTAL
+    if hp>0 and hr > hp: 
+        combi_h = calculate_panels(wp, hp, wr, hp) +  calculate_panels(wp, hp, wr, hr - hp)
+        final = max(final, combi_h)
+
+   
 
     return final
 
